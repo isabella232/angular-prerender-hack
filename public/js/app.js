@@ -9863,13 +9863,14 @@ function $RootScopeProvider(){
 
           if(dirty && !(ttl--)) {
             clearPhase();
+            $rootScope.$emit('$digestComplete');
             throw $rootScopeMinErr('infdig',
                 '{0} $digest() iterations reached. Aborting!\nWatchers fired in the last 5 iterations: {1}',
                 TTL, toJson(watchLog));
           }
         } while (dirty || asyncQueue.length);
-
         clearPhase();
+        $rootScope.$emit('$digestComplete');
       },
 
 
@@ -20608,6 +20609,26 @@ angular.module("app").controller('HomeController', function($scope, $location, A
   };
 });
 
+angular.module("app").controller('ContentSectionController', function($scope, $rootScope) {
+//$scope.$watch('member.firstName', function(newValue, oldValue) {
+//  alert('loaded: old='+oldValue+'; new='+newValue);
+//});
+  //$scope.$on('$viewContentLoaded', function() {
+  $rootScope.$on('$digestComplete', function() {
+    if($rootScope.digestCounter) {
+      $rootScope.digestCounter++;
+    }
+    else {
+      $rootScope.digestCounter= 1;
+    }
+    console.log('view content loaded!');
+    //alert('loaded view content!');
+    if(document.onprerendered && $rootScope.digestCounter == 2) {
+      // I have no idea why digest is called twice nor why the second time is what works.
+      document.onprerendered();
+    }
+  });
+});
 angular.module("app").controller('LoginController', function($scope, $location, AuthenticationService) {
   $scope.credentials = { username: "", password: "" };
 
@@ -20765,6 +20786,11 @@ angular.module("app").config(function($routeProvider, $locationProvider) {
     templateUrl: 'angular/member_profile.html',
     controller: 'MemberProfileController'
   });
+  $routeProvider.when('/PRERENDER/members/:memberId', {
+    templateUrl: 'angular/member_profile.html',
+    controller: 'MemberProfileController'
+  });
+
 
   $routeProvider.otherwise({ redirectTo: '/login' });
 

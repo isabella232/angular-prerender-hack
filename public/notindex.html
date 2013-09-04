@@ -92,7 +92,7 @@
                 <span ng-bind="alert.msg"></span>
             </div>
         </div>
-        <div id="view" ng-view></div>
+        <div id="view" ng-view ng-controller="ContentSectionController"></div>
     </div>
 
     <footer class="footer" role="contentinfo">
@@ -147,7 +147,7 @@
               if (document.body.getAttribute('data-prerendered')) {
                         document.addEventListener('click', function() {
                                     document.removeEventListener('click', arguments.callee, true);
-                                            angular.bootstrap(document.body, []);
+                                            //angular.bootstrap(document.body, []);
                                                     return true;
                                                           }, true);
                             } else {
