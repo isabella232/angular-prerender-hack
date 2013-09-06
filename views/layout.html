@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <!-- best practice to use ng-bind instead of {{ }} in index.html so it doesn't display the empty {{ }}
+         beore the app is loaded -->
+    <title ng-bind="$root.pageTitle || 'Manta'"></title>
+    <link rel="stylesheet" type="text/css" href="/css/app.css" media="all" />
+  </head>
+  <body>
+    <a class="sr-only" href="#content">Skip navigation</a>
+<!-- START /includes/nav-main.html -->
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+  <div class="container">
+    <nav role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{{ page.base_url }}" class="navbar-brand" style="background: url(http://m4.manta-r1.com/manta/images/manta-logo-sp.png) -50px 0px;height: 25px;width: 100px;background-size: 150px 25px;margin-right: 5px;margin-top: 14px;overflow:hidden; padding:0;"></a>
+      </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <form class="navbar-form navbar-left form-inline" role="search">
+             <div class="form-group">
+              <div class="input-group">
+            <input type="search" class="form-control navbar-search fs-small" placeholder="Find products, services, businesses">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+              </div>
+             </div>
+            </form>
+        </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="nav navbar-nav navbar-btn">
+        <div class="dropdown">
+              <button type="button" class="dropdown-toggle btn btn-default" data-toggle="dropdown"><span class="glyphicon glyphicon-list text-info"></span> Browse</button>
+              <ul class="dropdown-menu">
+                            <li><a href="http://www.manta.com/mb_34_E0209_000/general_contractors_single_family_houses" title="Contractors">Contractors</a></li>
+                            <li><a href="http://www.manta.com/mb_34_C432C_000/restaurants">Restaurants</a></li>
+                            <li><a href="http://www.manta.com/mb_33_B1_000/automotive_services">Automotive</a></li>
+                            <li><a href="http://www.manta.com/mb_34_D0015_000/offices_and_clinics_of_dentists">Dentists</a></li>
+                            <li><a href="http://www.manta.com/mb_35_D000B000_000/offices_and_clinics_of_medical_doctors">Doctors</a></li>
+                            <li><a href="http://www.manta.com/mb_34_A306F_000/legal_services">Legal</a></li>
+                            <li><a href="http://www.manta.com/mb_34_B30E7_000/beauty_shops">Beauty</a></li>
+                            <li><a href="http://www.manta.com/mb_34_B700B_000/hotels_and_motels">Lodging</a></li>
+                            <li><a href="http://www.manta.com/mb">All U.S. Businesses</a></li>
+                            <li><a href="http://www.manta.com/world/">All Businesses Worldwide</a></li>
+              </ul>
+        </div>
+            </div>
+
+        <div class="nav navbar-nav navbar-right">
+          <div class="btn-toolbar">
+            <button type="button" class="btn btn-default navbar-btn">Sign Up</button>
+            <button type="button" class="btn btn-default navbar-btn">Sign In</button>
+          </div>
+        </div>
+          </div>
+    </nav>
+  </div>
+</header>
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/" class="navbar-link">Home</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav navbar-right">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#"><span class="text-warning"> + </span>Add your business</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END /includes/nav-main.html -->
+    <div class="container main-container content">
+        <div ng-repeat="alert in alerts" ng-controller="AlertsController">
+            <div class="alert alert-dismissable fade in {{alert.type}}">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="clearAlert(alert.type)">&times;</button>
+                <span ng-bind="alert.msg"></span>
+            </div>
+        </div>
+        <div id="view">{{{yield}}}</div>
+    </div>
+
+    <footer class="footer" role="contentinfo">
+<!-- START /includes/footer.html -->
+<div class=" navbar navbar-inverse">
+    <div class="container">
+        <div class="">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="http://www.manta.com/coms2/page_about_manta" class="navbar-link">About Manta</a></li>
+                <li class=""><a href="http://www.manta.com/coms2/page_about_manta_contact" class="navbar-link">Contact Manta</a></li>
+                <li class=""><a href="http://www.manta.com/manta-careers" target="_top" class="navbar-link">Manta Careers </a></li>
+                <li class=""><a href="http://www.manta.com/media/" class="navbar-link">Media Resources</a></li>
+                <li class=""><a href="http://www.manta.com/coms2/page_faq" class="navbar-link">FAQ</a></li>
+                <li class=""><a href="http://www.manta.com/coms2/page_advertise" target="_top" class="navbar-link">Advertise With Us</a></li>
+            </ul>
+        </div>
+        <div class="nav navbar-right">
+            <span class="navbar-text">Are you a small business? <a href="http://www.manta.com/profile/my-companies/select?rl=create-your-profile-footer-home" class="navbar-link">Create your free company profile today</a></span>
+        </div>
+    </div>
+</div>
+<div class="navbar">
+    <div class="container">
+        <div class="col-md-8">
+            <p>
+                <span class="neutralMiddark">© Manta Media Inc. All rights reserved</span><br/>
+                <span><strong>By using this site, you agree to these terms.</strong></span>
+                <span><a id="footer-privacy" href="http://www.manta.com/coms2/page_terms_conditions_privacy">Privacy Policy</a> and <a id="footer-tnc" href="http://www.manta.com/coms2/page_terms_conditions_view">Terms &amp; Conditions</a> (revised 06/03/2013)</span><br/>
+                <span><a href="http://www.manta.com/coms2/page_site_map">Site Map</a></span>
+            </p>
+        </div>
+        <div class="nav navbar-right">
+            <a href="http://blog.manta.com/" target="_blank" class="mrm"><span class=""></span><span><strong>Blog</strong></span></a>
+            <a href="http://twitter.com/Manta" target="_blank" class="mrm"><span class=""></span><span><strong>Twitter</strong></span></a>
+            <a href="http://facebook.com/mantacom" target="_blank" class="mrm"><span class=""></span><span><strong>Facebook</strong></span></a>
+            <a href="https://plus.google.com/116991505962569250048" target="_blank"><span class=""></span><span><strong>Google+</strong></span></a>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Manta JavaScript
+================================================== -->
+<!-- END /includes/footer.html -->
+    </footer>
+
+
+    <script type="text/javascript" src="/js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+{>layout/}
+{<content}
+<div>
+    <div class="col-md-8 " role="main">
+        <div>
+            <address>
+                <h1 class="text-primary">{company.name}</h1>
+                <h4>
+                    <div class="text-primary">{company.address}</div>
+                    <div class="text-primary">{company.city}, {company.stateAbbrv} {company.zip}</div>
+                    <div class="text-primary">Phone: {company.phone | tel}</div>
+                    <div class="text-primary">Website: <a href="{company.website}">{company.website}</a></div>
+                </h4>
+            </address>
+            <div class="row">
+                <div class="col-md-7">
+                    <div>
+                        <span class="h4 text-primary"><strong>{company.followers.count}</strong></span> <span class="text-primary">Followers</span>
+                        <a href="#"><span>&bullet; Follow this business</span></a>
+                        <br/>
+                        <span class="h4 text-primary"><strong>{company.recommendations.count}</strong></span> <span class="text-primary">Recommendations</span>
+                        <a href="/member/join/?rld={company.mantaUrl.profile}%3Fdialog%3Dwrite-recommendation">&bullet; Leave a recommendation</a>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="btn-group"><a href="#" class="btn btn-info">Own this Business?</a></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div xng-show="company.relatedCompanies.count" class="text-primary fs-small">
+            <h4>Top {company.relatedCompanies.list.length} {company.industry.sicm.name} near {company.city}, {company.state}</h4>
+            <ol>
+            {#company.relatedCompanies.list}
+                <li xng-repeat="related_company in company.relatedCompanies.list" class="col-md-6">
+                    <a href="{mantaUrl.profile}" class="text-primary">{name}</a>
+                </li>
+            {/company.relatedCompanies.list}
+            </ol>
+            <ul class="list-inline">
+                <li><strong><a href="{company.industry.sicm.url}" class="text-primay">» See All {company.industry.sicm.name}</a></strong></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="text-primary">More Details for {company.name}</h4>
+            <p class="fs-small">
+                {company.shortDescription}
+            </p>
+            <ul xng-show="company.products.count" class="list-unstyled">
+                <li>
+                    <h4 class="text-primary">Products or Services</h4>
+                    <span class="fs-small">Companies like {company.name} usually offer: {#company.products.list}<span xng-repeat="product in company.products.list">{name}</span>{@sep}, {/sep}</span>{/company.products.list}.
+                </li>
+            </ul>
+        </div>
+    
+        <div class="well well-sm">
+            <h4 class="text-primary">Business Information</h4>
+            <table class="table table-condensed">
+                <tbody>
+
+                    {#company.locationType}
+                    <tr xng-if="company.locationType">
+                        <th class="text-right">Location Type</th>
+                        <td>{company.locationType}</td>
+                    </tr>
+                    {/company.locationType}
+
+                    {#company.stateOfIncorporation}
+                    <tr xng-if="company.stateOfIncorporation">
+                        <th class="text-right">State of Incorporation</th>
+                        <td>{company.stateOfIncorporation}</td>
+                    </tr>
+                    {/company.stateOfIncorporation}
+
+                    {#company.revenue}
+                    <tr xng-if="company.annualRevenue">
+                        <th class="text-right">Annual Revenue Estimate</th>
+                        <td>{company.revenue}</td>
+                    </tr>
+                    {/company.revenue}
+                    <tr xng-if="company.industry.sic">
+                        <th class="text-right">SIC Code</th>
+                        <td>{company.industry.sic.code}, {company.industry.sic.name}</td>
+                    </tr>
+                    <tr xng-if="company.industry.naics.code">
+                        <th class="text-right">NAICS Code</th>
+                        <td>{company.industry.naics.code}, {company.industry.naics.name}</td>
+                    </tr>
+                    <tr xng-if="company.numEmployees">
+                        <th class="text-right">Employees</th>
+                        <td>{company.numEmployees}</td>
+                    </tr>
+                    <tr xng-if="company.contacts.count">
+                        <th class="text-right">Company Contacts</th>
+                        <td>
+                            <ul class="list-unstyled">
+                                {#company.contacts.list}
+                                <li xng-repeat="contact in company.contacts.list">
+                                    {name}, {title}
+                                </li>
+                                {/company.contacts.list}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr xng-if="company.industry.sicm">
+                        <th class="text-right">Business Categories</th>
+                        <td>
+                            <ul class="list-unstyled">
+                                <li><a href="http://www.manta.com/mb_55_AA185106_D2T/bail_bonding/mays_landing_nj">{company.industry.sicm.name} in {company.city}, {company.stateAbbrv}</a></li>
+                                <li>Business Services</li>
+                                <li>Direct Property &amp; Casualty Insurance Carriers</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div><!-- end "main" col-md-8 -->
+
+    <div class="col-md-4">
+        <div class="panel-map">
+            <a href="{company.mantaUrl.map}">
+                <img src="http://maps.googleapis.com/maps/api/staticmap?center={company.address}%2C{company.city}%2C{company.stateAbbrv}&amp;zoom=17&amp;size=317x200&amp;maptype=roadmap&amp;markers=color:yellow%7C{company.address}%2C{company.city}%2C{company.stateAbbrv }&amp;sensor=false" border="0">
+            </a>
+        </div>
+
+            <!-- stop doing list: div class="panel panel-default">
+              <div class="panel-heading">Recommendations</div>
+              <div class="panel-body">
+                <div class="media">
+                   <div class="pull-left"><span class="media-object text-info glyphicon glyphicon-check"></span></div>
+                   <div class="media-body">
+                      <a xng-href="https://www.manta.com/member/join/?rld={company.mantaUrl.profile}%3Fdialog%3Dwrite-recommendation">
+                       <span>Have a good experience?<br>Add Your Recommendation</span>
+                      </a>
+                   </div>
+                </div>
+              </div>
+            </div-->
+
+            <div class="panel panel-default">
+               <div class="panel-heading">Similar Businesses in Nearby Cities</div>
+               <div class="panel-body">
+                  <ul class="list-unstyled">
+                    <li>
+                        <p><a href="http://www.manta.com/mb_55_AA185106_CXQ/bail_bonding/egg_harbor_city_nj">Egg Harbor City, {company.stateAbbrv}<br>
+                            <span class="text-muted">{company.industry.sicm.name}</span></a> <span class="text-warning"><strong>(1)</strong></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="http://www.manta.com/mb_55_AA185106_CXR/bail_bonding/egg_harbor_township_nj">Egg Harbor Township, {company.stateAbbrv}<br>
+                            <span class="text-muted">{company.industry.sicm.name}</span></a> <span class="text-warning"><strong>(1)</strong></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="http://www.manta.com/mb_55_AA185106_D64/bail_bonding/pleasantville_nj">Pleasantville, {company.stateAbbrv}<br>
+                            <span class="text-muted">{company.industry.sicm.name}</span></a> <span class="text-warning"><strong>(1)</strong></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="http://www.manta.com/mb_55_AA185106_D9U/bail_bonding/vineland_nj">Vineland, {company.stateAbbrv}<br>
+                            <span class="text-muted">{company.industry.sicm.name}</span></a> <span class="text-warning"><strong>(1)</strong></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="http://www.manta.com/mb_55_AA185106_CU8/bail_bonding/atlantic_city_nj">Atlantic City, {company.stateAbbrv}<br>
+                            <span class="text-muted">{company.industry.sicm.name}</span></a> <span class="text-warning"><strong>(1)</strong></span>
+                        </p>
+                    </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="panel panel-default">
+               <div class="panel-heading">In Related Categories</div>
+               <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <p><a xng-href="http://www.manta.com/mb_55_AA1857PR_D2T/unclassified/mays_landing_nj">Unclassified<br>
+                                <span class="text-muted">in {company.city}, {company.stateAbbrv}</span></a>
+                                <span class="text-warning"><strong>(118)</strong></span></p>
+                        </li>                       <li>
+                            <p><a xng-href="http://www.manta.com/mb_55_AA185000_D2T/business_services_nec/mays_landing_nj">Business Services (Unclassified)<br>
+                                <span class="text-muted">in {company.city}, {company.stateAbbrv}</span></a>
+                                <span class="text-warning"><strong>(54)</strong></span></p>
+                        </li>                       <li>
+                            <p><a xng-href="http://www.manta.com/mb_55_AA1851E0_D2T/design_services/mays_landing_nj">Design Services<br>
+                                <span class="text-muted">in {company.city}, {company.stateAbbrv}</span></a>
+                                <span class="text-warning"><strong>(13)</strong></span></p>
+                        </li>                       <li>
+                            <p><a xng-href="http://www.manta.com/mb_55_AA1850GO_D2T/interior_design_services/mays_landing_nj">Interior Decorators Design and Consultants<br>
+                                <span class="text-muted">in {company.city}, {company.stateAbbrv}</span></a>
+                                <span class="text-warning"><strong>(6)</strong></span></p>
+                        </li>                       <li>
+                            <p><a xng-href="http://www.manta.com/mb_55_AA18502S_D2T/personal_service_agents_brokers_and_bureaus/mays_landing_nj">Merchandise Brokers<br>
+                                <span class="text-muted">in {company.city}, {company.stateAbbrv}</span></a>
+                                <span class="text-warning"><strong>(6)</strong></span></p>
+                        </li>
+                    </ul>
+               </div>
+            </div>
+    </div>
+</div>
+
+{/content}
